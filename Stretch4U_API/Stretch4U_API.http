@@ -1,0 +1,6 @@
+@Stretch4U_API_HostAddress = http://localhost:5259
+
+GET {{Stretch4U_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
