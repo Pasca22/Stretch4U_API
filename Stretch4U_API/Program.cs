@@ -23,6 +23,11 @@ builder.Services.AddDbContext<Stretch4UContext>(options =>
 
 builder.Services.AddBusinessServices();
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.WebHost.UseUrls("http://0.0.0.0:5259");
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
