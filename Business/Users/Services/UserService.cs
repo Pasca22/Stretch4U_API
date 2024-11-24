@@ -41,7 +41,6 @@ internal class UserService : IUserService
         {
             Id = user.Id,
             Username = user.Username,
-            Messages = user.Messages,
             Token = token
         };
 
@@ -63,23 +62,31 @@ internal class UserService : IUserService
             throw new Exception("Invalid password");
         }
 
-        var oldMessages = await _context.Messages.Where(m => m.UserId == user.Id && m.CreatedAt < DateTime.UtcNow.AddDays(-1))
-                                                 .ToListAsync();
-        _context.Messages.RemoveRange(oldMessages);
-        await _context.SaveChangesAsync();
-
-        var messages = await _context.Messages.Where(m => m.UserId == user.Id)
-                                              .ToListAsync();
-        user.Messages = messages;
-
         var token = GenerateToken();
 
         var userData = new UserData
         {
             Id = user.Id,
             Username = user.Username,
-            Messages = user.Messages,
             Token = token
+        };
+
+        return userData;
+    }
+
+    public async Task<UserData> GetUserData(int userId)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
+
+        var userData = new UserData
+        {
+            Id = user.Id,
+            Username = user.Username
         };
 
         return userData;
@@ -109,4 +116,5 @@ internal class UserService : IUserService
         new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
                        SecurityAlgorithms.HmacSha256Signature);
+
 }

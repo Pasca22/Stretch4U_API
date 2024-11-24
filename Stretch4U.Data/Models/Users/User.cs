@@ -1,5 +1,4 @@
 ﻿using Stretch4U.Data.Models.Messages;
-using System.Text.Json.Serialization;
 
 namespace Stretch4U.Data.Models.Users;
 

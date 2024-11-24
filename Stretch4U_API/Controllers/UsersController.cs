@@ -1,49 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stretch4U.API.Requests.Users;
 using Stretch4U.Business.Users.Services;
 
-namespace Stretch4U.API.Controllers
+namespace Stretch4U.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class UsersController : Controller
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : Controller
+    private readonly IUserService _userService;
+
+    public UsersController(IUserService userService)
     {
-        private readonly IUserService _userService;
+        _userService = userService;
+    }
 
-        public UsersController(IUserService userService)
+    [HttpPost("signup")]
+    public async Task<IActionResult> Signup([FromBody] SignupRequest request)
+    {
+        try
         {
-            _userService = userService;
+            var result = await _userService.Signup(request.ToSignupRequestDTO());
+
+            return Ok(result);
         }
-
-        [HttpPost("signup")]
-        public async Task<IActionResult> Signup([FromBody] SignupRequest request)
+        catch (DbUpdateException)
         {
-            try
-            {
-                var result = await _userService.Signup(request.ToSignupRequestDTO());
-
-                return Ok(result);
-            }
-            catch (DbUpdateException)
-            {
-                return new BadRequestObjectResult("Username already exists");
-            }
+            return new BadRequestObjectResult("Username already exists");
         }
+    }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    {
+        try
         {
-            try
-            {
-                var result = await _userService.Login(request.ToLoginRequestDTO());
+            var result = await _userService.Login(request.ToLoginRequestDTO());
 
-                return Ok(result);
-            }
-            catch (Exception)
-            {
-                return new BadRequestObjectResult("Invalid username or password");
-            }
+            return Ok(result);
+        }
+        catch (Exception)
+        {
+            return new BadRequestObjectResult("Invalid username or password");
+        }
+    }
+
+    [Authorize]
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> GetUserData(int userId)
+    {
+        try
+        {
+            var result = await _userService.GetUserData(userId);
+            return Ok(result);
+        }
+        catch (Exception)
+        {
+            return new BadRequestObjectResult("Failed to get user data");
         }
     }
 }

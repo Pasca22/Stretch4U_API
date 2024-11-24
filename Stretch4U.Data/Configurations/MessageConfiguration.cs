@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stretch4U.Data.Models.Messages;
-using Stretch4U.Data.Models.Users;
 
 namespace Stretch4U.Data.Configurations;
 

@@ -6,6 +6,5 @@ public class UserData
 {
     public int Id { get; set; }
     public string Username { get; set; }
-    public ICollection<Message> Messages { get; set; }
     public JwtToken Token { get; set; }
 }
