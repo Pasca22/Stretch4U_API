@@ -10,5 +10,10 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(user => user.Id);
         builder.HasIndex(user => user.Username).IsUnique();
+
+        builder.HasMany(user => user.Messages)
+              .WithOne(message => message.User)
+              .HasForeignKey(message => message.UserId)
+              .OnDelete(DeleteBehavior.Cascade);
     }
 }

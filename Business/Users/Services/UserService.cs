@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Stretch4U.Business.Users.Models;
 using Stretch4U.Data;
+using Stretch4U.Data.Models.Messages;
 using Stretch4U.Data.Models.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -20,14 +21,15 @@ internal class UserService : IUserService
         _configuration = configuration;
     }
 
-    public async Task<JwtToken> Signup(SignupRequestDTO request)
+    public async Task<UserData> Signup(SignupRequestDTO request)
     {
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
         var user = new User
         {
             Username = request.Username,
-            Password = hashedPassword
+            Password = hashedPassword,
+            Messages = new List<Message>()
         };
 
         _context.Users.Add(user);
@@ -35,12 +37,22 @@ internal class UserService : IUserService
 
         var token = GenerateToken();
 
-        return token;
+        var userData = new UserData
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Messages = user.Messages,
+            Token = token
+        };
+
+        return userData;
     }
 
-    public async Task<JwtToken> Login(LoginRequestDTO request)
+    public async Task<UserData> Login(LoginRequestDTO request)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+        var user = await _context.Users.Include(u => u.Messages)
+                                       .FirstOrDefaultAsync(u => u.Username == request.Username);
+
         if (user == null)
         {
             throw new Exception("User not found");
@@ -51,9 +63,26 @@ internal class UserService : IUserService
             throw new Exception("Invalid password");
         }
 
+        var oldMessages = await _context.Messages.Where(m => m.UserId == user.Id && m.CreatedAt < DateTime.UtcNow.AddDays(-1))
+                                                 .ToListAsync();
+        _context.Messages.RemoveRange(oldMessages);
+        await _context.SaveChangesAsync();
+
+        var messages = await _context.Messages.Where(m => m.UserId == user.Id)
+                                              .ToListAsync();
+        user.Messages = messages;
+
         var token = GenerateToken();
 
-        return token;
+        var userData = new UserData
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Messages = user.Messages,
+            Token = token
+        };
+
+        return userData;
     }
 
     private JwtToken GenerateToken()
