@@ -44,6 +44,7 @@ builder.Services.AddDbContext<Stretch4UContext>(options =>
     options.UseSqlServer(builder.Configuration["SqlConnection"]));
 
 builder.Services.AddBusinessServices();
+builder.Services.AddHostedService<MessageCleanupService>();
 
 if (builder.Environment.IsDevelopment())
 {

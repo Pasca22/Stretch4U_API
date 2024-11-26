@@ -44,18 +44,4 @@ public class MessagesController : Controller
             return new BadRequestObjectResult("Failed to get messages");
         }
     }
-
-    [HttpDelete("{userId}")]
-    public async Task<IActionResult> DeleteOldMessages(int userId)
-    {
-        try
-        {
-            await _messageService.DeleteOldMessages(userId);
-            return Ok();
-        }
-        catch (Exception)
-        {
-            return new BadRequestObjectResult("Failed to delete messages");
-        }
-    }
 }

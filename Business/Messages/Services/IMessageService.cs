@@ -7,5 +7,5 @@ public interface IMessageService
 {
     Task<Message> AddMessage(AddMessageRequestDTO request);
     Task<IEnumerable<Message>> GetMessages(int userId);
-    Task DeleteOldMessages(int userId);
+    Task DeleteOldMessages();
 }

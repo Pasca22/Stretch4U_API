@@ -89,9 +89,9 @@ internal class MessageService : IMessageService
         return messages;
     }
 
-    public Task DeleteOldMessages(int userId)
+    public Task DeleteOldMessages()
     {
-        var oldMessages = _context.Messages.Where(m => m.UserId == userId && m.CreatedAt < DateTime.UtcNow.AddDays(-1));
+        var oldMessages = _context.Messages.Where(m => m.CreatedAt < DateTime.UtcNow.AddDays(-1));
         _context.Messages.RemoveRange(oldMessages);
         return _context.SaveChangesAsync();
     }
