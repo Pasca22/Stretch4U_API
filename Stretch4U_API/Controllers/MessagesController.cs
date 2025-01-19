@@ -8,7 +8,7 @@ namespace Stretch4U.API.Controllers;
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class MessagesController : Controller
+public class MessagesController : ControllerBase
 {
     private readonly IMessageService _messageService;
 

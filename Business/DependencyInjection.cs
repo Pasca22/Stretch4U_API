@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Stretch4U.Business.ExercisesImages.Services;
 using Stretch4U.Business.Messages.Services;
 using Stretch4U.Business.Users.Services;
 
@@ -8,5 +9,6 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddBusinessServices(this IServiceCollection services) =>
         services.AddTransient<IUserService, UserService>()
-                .AddTransient<IMessageService, MessageService>();   
+                .AddTransient<IMessageService, MessageService>()
+                .AddTransient<IExercisesService, ExercisesService>();
 }

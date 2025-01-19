@@ -8,4 +8,5 @@ public class ConfigurationConstants
     public static string ChatBotKey { get; set; } = "ChatBot:Key";
     public static string ChatBotUrl { get; set; } = "ChatBot:Url";
     public static string ChatBotModel { get; set; } = "ChatBot:Model";
+    public static string AIModelUrl { get; set; } = "AI_Model:Url";
 }

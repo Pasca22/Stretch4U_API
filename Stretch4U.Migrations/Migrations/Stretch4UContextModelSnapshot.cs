@@ -22,6 +22,65 @@ namespace Stretch4U.Migrations.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Stretch4U.Data.Models.Exercises.Exercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MobilityLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sets")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exercises");
+                });
+
+            modelBuilder.Entity("Stretch4U.Data.Models.ExercisesImages.HamstringStretchImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("HamstringStretchImages");
+                });
+
             modelBuilder.Entity("Stretch4U.Data.Models.Messages.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -59,6 +118,9 @@ namespace Stretch4U.Migrations.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("MobilityLevel")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -75,6 +137,17 @@ namespace Stretch4U.Migrations.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Stretch4U.Data.Models.ExercisesImages.HamstringStretchImage", b =>
+                {
+                    b.HasOne("Stretch4U.Data.Models.Users.User", "User")
+                        .WithMany("HamstringStretchImages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Stretch4U.Data.Models.Messages.Message", b =>
                 {
                     b.HasOne("Stretch4U.Data.Models.Users.User", "User")
@@ -88,6 +161,8 @@ namespace Stretch4U.Migrations.Migrations
 
             modelBuilder.Entity("Stretch4U.Data.Models.Users.User", b =>
                 {
+                    b.Navigation("HamstringStretchImages");
+
                     b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
