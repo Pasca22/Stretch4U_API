@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Stretch4U.Business.Exercises.Models;
-using Stretch4U.Business.Messages.Models;
 using Stretch4U.Data;
 using Stretch4U.Data.Models.ExercisesImages;
 using System.Net.Http.Json;

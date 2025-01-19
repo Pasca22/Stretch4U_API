@@ -71,6 +71,13 @@ internal class UserService : IUserService
             Token = token
         };
 
+        if (user.MobilityLevel != null)
+        {
+            userData.Result = user.MobilityLevel.Value;
+            var exercises = await _context.Exercises.Where(e => e.MobilityLevel == user.MobilityLevel).ToListAsync();
+            userData.Exercises = exercises;
+        }
+
         return userData;
     }
 
@@ -88,6 +95,13 @@ internal class UserService : IUserService
             Id = user.Id,
             Username = user.Username
         };
+
+        if (user.MobilityLevel != null)
+        {
+            userData.Result = user.MobilityLevel.Value;
+            var exercises = await _context.Exercises.Where(e => e.MobilityLevel == user.MobilityLevel).ToListAsync();
+            userData.Exercises = exercises;
+        }
 
         return userData;
     }
