@@ -17,7 +17,7 @@ public class ExercisesController : ControllerBase
     }
 
     [HttpPost("start-mobility-test/{userId}")]
-    public async Task<IActionResult> UploadHamstringStretchImage([FromRoute] int userId, [FromForm(Name = "Data")] IFormFile image)
+    public async Task<IActionResult> StartMobilityTest([FromRoute] int userId, [FromForm(Name = "Data")] IFormFile image)
     {
         try
         {
