@@ -9,11 +9,11 @@ namespace Stretch4U.API.Controllers;
 [ApiController]
 public class ExercisesController : ControllerBase
 {
-    private readonly IExercisesService _exercisesImageService;
+    private readonly IExercisesService _exercisesService;
 
     public ExercisesController(IExercisesService exercisesImageService)
     {
-        _exercisesImageService = exercisesImageService;
+        _exercisesService = exercisesImageService;
     }
 
     [HttpPost("start-mobility-test/{userId}")]
@@ -21,7 +21,7 @@ public class ExercisesController : ControllerBase
     {
         try
         {
-            var result = await _exercisesImageService.StartMobilityTest(userId, image);
+            var result = await _exercisesService.StartMobilityTest(userId, image);
             return Ok(result);
         }
         catch (Exception e)

@@ -42,7 +42,7 @@ internal class ExercisesService : IExercisesService
             UserId = userId,
         };
 
-        var imageInDB = await _context.HamstringStretchImages.FirstOrDefaultAsync(i => i.UserId == userId);
+        var imageInDB = _context.HamstringStretchImages.FirstOrDefault(i => i.UserId == userId);
         if (imageInDB == null)
         {
             await _context.HamstringStretchImages.AddAsync(hamstringsStretchImage);
@@ -72,7 +72,7 @@ internal class ExercisesService : IExercisesService
             PropertyNameCaseInsensitive = true
         });
 
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
         user.MobilityLevel = aiModelResponse.Result;
         await _context.SaveChangesAsync();
 

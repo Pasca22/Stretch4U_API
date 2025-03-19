@@ -23,6 +23,11 @@ internal class UserService : IUserService
 
     public async Task<UserData> Signup(SignupRequestDTO request)
     {
+        if (_context.Users.FirstOrDefault(u => u.Username == request.Username) != null)
+        {
+            throw new Exception("Username already exists");
+        }
+
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
         var user = new User
@@ -49,8 +54,8 @@ internal class UserService : IUserService
 
     public async Task<UserData> Login(LoginRequestDTO request)
     {
-        var user = await _context.Users.Include(u => u.Messages)
-                                       .FirstOrDefaultAsync(u => u.Username == request.Username);
+        var user = _context.Users.Include(u => u.Messages)
+                                 .FirstOrDefault(u => u.Username == request.Username);
 
         if (user == null)
         {
@@ -83,7 +88,7 @@ internal class UserService : IUserService
 
     public async Task<UserData> GetUserData(int userId)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
         if (user == null)
         {

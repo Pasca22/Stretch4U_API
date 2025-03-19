@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Stretch4U.Business.Messages.Models;
 using Stretch4U.Data;
 using Stretch4U.Data.Models.Messages;
-using Stretch4U.Data.Models.Users;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;

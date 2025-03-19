@@ -3,15 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stretch4U.API", "Stretch4U_API\Stretch4U.API.csproj", "{800D7EE6-AB62-423A-96C3-EB22A213A42C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stretch4U.API", "Stretch4U_API\Stretch4U.API.csproj", "{800D7EE6-AB62-423A-96C3-EB22A213A42C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stretch4U.Business", "Business\Stretch4U.Business.csproj", "{070236F3-1585-413F-AEFB-B2E8B8A83DC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stretch4U.Business", "Business\Stretch4U.Business.csproj", "{070236F3-1585-413F-AEFB-B2E8B8A83DC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stretch4U.Data", "Stretch4U.Data\Stretch4U.Data.csproj", "{499F68B5-E16F-4106-A52A-44A385CBB993}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stretch4U.Data", "Stretch4U.Data\Stretch4U.Data.csproj", "{499F68B5-E16F-4106-A52A-44A385CBB993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stretch4U.Migrations", "Stretch4U.Migrations\Stretch4U.Migrations.csproj", "{3FC119C5-4E68-4DD9-ABCD-CC8FC2928FC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stretch4U.Migrations", "Stretch4U.Migrations\Stretch4U.Migrations.csproj", "{3FC119C5-4E68-4DD9-ABCD-CC8FC2928FC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stretch4U.UnitTests", "Stretch4U.UnitTests\Stretch4U.UnitTests.csproj", "{B5AF0CB5-B127-4391-90C0-3F6AFCA6F645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stretch4U.UnitTests", "Stretch4U.UnitTests\Stretch4U.UnitTests.csproj", "{B5AF0CB5-B127-4391-90C0-3F6AFCA6F645}"
+	ProjectSection(ProjectDependencies) = postProject
+		{070236F3-1585-413F-AEFB-B2E8B8A83DC3} = {070236F3-1585-413F-AEFB-B2E8B8A83DC3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Stretch4U.Business.Exercises.Models;
-using Stretch4U.Data.Models.ExercisesImages;
 
 namespace Stretch4U.Business.ExercisesImages.Services;
 
