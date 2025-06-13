@@ -56,14 +56,16 @@ internal class ExercisesService : IExercisesService
 
         await _context.SaveChangesAsync();
 
-        // TODO: Image request
-        var request = new { };
+        using var content = new MultipartFormDataContent();
+        var imageContent = new ByteArrayContent(memoryStream.ToArray());
+        imageContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(image.ContentType);
+        content.Add(imageContent, "image", image.FileName);
 
-        var response = await _httpClient.PostAsJsonAsync(url, request);
+        var response = await _httpClient.PostAsync(url, content);
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception($"Failed to communicate with chatbot service: {response.ReasonPhrase}");
+            throw new Exception($"Failed to communicate with AI model service: {response.ReasonPhrase}");
         }
 
         var responseContent = await response.Content.ReadAsStringAsync();
