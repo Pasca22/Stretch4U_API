@@ -26,9 +26,9 @@ public class UsersController : ControllerBase
 
             return Ok(result);
         }
-        catch (DbUpdateException)
+        catch (Exception e)
         {
-            return new BadRequestObjectResult("Username already exists");
+            return new BadRequestObjectResult(e.Message);
         }
     }
 

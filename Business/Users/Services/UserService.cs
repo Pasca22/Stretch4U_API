@@ -7,6 +7,7 @@ using Stretch4U.Data.Models.Messages;
 using Stretch4U.Data.Models.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Stretch4U.Business.Users.Services;
 
@@ -26,6 +27,13 @@ internal class UserService : IUserService
         if (_context.Users.FirstOrDefault(u => u.Username == request.Username) != null)
         {
             throw new Exception("Username already exists");
+        }
+
+        string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$";
+        if (!Regex.IsMatch(request.Password, pattern))
+        {
+            throw new Exception("Password needs to have at least an upper case letter," +
+                " a lower case letter and a number");
         }
 
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);

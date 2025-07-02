@@ -50,7 +50,7 @@ public class SignupTests : BaseTests
         var request = new SignupRequestDTO
         {
             Username = "test",
-            Password = "test"
+            Password = "testASDDS32"
         };
 
         //Act
